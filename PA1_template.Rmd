@@ -23,12 +23,13 @@ Data aggregation:
 ```{r echo=TRUE}
 ac.grouped_date <- group_by(ac,date)
 acConsol <- summarise(ac.grouped_date, s = sum(steps, na.rm=TRUE))
+acConsol <- acConsol[s>0,]
 ```
   
 Histogram of the total number of steps taken each day:
   
 ```{r echo=TRUE}
-qplot(acConsol$s)
+qplot(acConsol$s) + labs(x="Total number of steps taken each day", y="Frequency")
 ```
   
 Mean and median calculation:
