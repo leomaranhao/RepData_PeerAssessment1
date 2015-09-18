@@ -12,6 +12,22 @@ output:
 
 ```r
 library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+## 
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+## 
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
 library(ggplot2)
 ac <- read.csv("activity.csv")
 ac<-mutate(ac, date=as.Date(date))
@@ -181,5 +197,5 @@ qplot(interval, m, data = acNovaConsolInterval, geom = "line", col = typeOfDay) 
 
 ![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png) 
   
-**Yes, there are differences in activity patterns between weekdays and weekends, as seen on the plots. The weekends seem to have more steps, than the weekdays, during the afternoon and less steps during the morning.**
+**Yes, there are differences in activity patterns between weekdays and weekends, as seen on the plots. The weekends seen to have more steps, than the weekdays, during the afternoon and less steps during the morning.**
 

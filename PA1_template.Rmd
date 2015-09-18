@@ -148,5 +148,5 @@ qplot(interval, m, data = acNovaConsolInterval, geom = "line", facets = typeOfDa
 qplot(interval, m, data = acNovaConsolInterval, geom = "line", col = typeOfDay) + labs(x="Intervals", y="Averaged Steps")
 ```
   
-**Yes, there are differences in activity patterns between weekdays and weekends, as seen on the plots. The weekends seem to have more steps, than the weekdays, during the afternoon and less steps during the morning.**
+**Yes, there are differences in activity patterns between weekdays and weekends, as seen on the plots. The weekends seen to have more steps, than the weekdays, during the afternoon and less steps during the morning.**
 
