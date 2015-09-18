@@ -9,7 +9,7 @@ output:
   
   
 ## Loading and preprocessing the data
-```{r beginning, echo=TRUE}
+```{r echo=TRUE}
 library(dplyr)
 library(ggplot2)
 ac <- read.csv("activity.csv")
@@ -20,10 +20,12 @@ ac<-mutate(ac, date=as.Date(date))
   
 Data aggregation:
   
+**The missing values are concentrated on few days. On those days all values are missing.**
+
 ```{r echo=TRUE}
 ac.grouped_date <- group_by(ac,date)
 acConsol <- summarise(ac.grouped_date, s = sum(steps, na.rm=TRUE))
-acConsol <- acConsol[s>0,]
+acConsol <- acConsol[acConsol$s>0,]
 ```
   
 Histogram of the total number of steps taken each day:
@@ -99,7 +101,7 @@ acNovaConsol <- summarise(acNova.grouped_date, s = sum(stepsMod, na.rm=TRUE))
 Histogram of the total number of steps taken each day:
   
 ```{r echo=TRUE}
-qplot(acNovaConsol$s)
+qplot(acNovaConsol$s) + labs(x="Total number of steps taken each day", y="Frequency")
 ```
   
 Mean and median calculation:
@@ -114,9 +116,7 @@ medianStep <- median(acNovaConsol$s)
 **Median total number of steps taken per day: `r medianStep`**
   
   
-### Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?  
-    ERROOOO!!!!
-**These values differ from the estimates from the first part of the assignment. As the imputing data considered the mean step value for the interval of the day and not the date itself, when calculation the mean and the median values by day, it caused a difference in the results.**
+**These values differ very little from the estimates from the first part of the assignment. The impact of imputing missing data on the estimates of the total daily number of steps was to bring the mean and the median to the same value.**
     
   
   
@@ -148,5 +148,5 @@ qplot(interval, m, data = acNovaConsolInterval, geom = "line", facets = typeOfDa
 qplot(interval, m, data = acNovaConsolInterval, geom = "line", col = typeOfDay) + labs(x="Intervals", y="Averaged Steps")
 ```
   
-**Yes, there are differences in activity patterns between weekdays and weekends, as seen on the plots.**
+**Yes, there are differences in activity patterns between weekdays and weekends, as seen on the plots. The weekends seem to have more steps, than the weekdays, during the afternoon and less steps during the morning.**
 

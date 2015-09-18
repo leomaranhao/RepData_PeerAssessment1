@@ -21,24 +21,27 @@ ac<-mutate(ac, date=as.Date(date))
   
 Data aggregation:
   
+**The missing values are concentrated on few days. On those days all values are missing.**
+
 
 ```r
 ac.grouped_date <- group_by(ac,date)
 acConsol <- summarise(ac.grouped_date, s = sum(steps, na.rm=TRUE))
+acConsol <- acConsol[acConsol$s>0,]
 ```
   
 Histogram of the total number of steps taken each day:
   
 
 ```r
-qplot(acConsol$s)
+qplot(acConsol$s) + labs(x="Total number of steps taken each day", y="Frequency")
 ```
 
 ```
 ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
   
 Mean and median calculation:
   
@@ -48,9 +51,9 @@ meanStep <- mean(acConsol$s)
 medianStep <- median(acConsol$s)
 ```
   
-**Mean total number of steps taken per day: 9354.2295082**
+**Mean total number of steps taken per day: 1.0766189 &times; 10<sup>4</sup>**
   
-**Median total number of steps taken per day: 10395**
+**Median total number of steps taken per day: 10765**
   
   
   
@@ -71,7 +74,7 @@ Time series plot of the 5-minute interval (x-axis) and the average number of ste
 qplot(interval, m, data = acConsolInterval, geom = "line") + labs(x="Intervals", y="Averaged Steps")
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
   
 Calculation of the maximum average number os steps taken and the interval with the maximum average number os steps taken:
   
@@ -102,7 +105,7 @@ acNova$stepsMod <- ifelse(acNova$isNA, acNova$Mean, acNova$steps)
   
 **The total number of missing values is: 2304**
   
-**The missing values are concentrated on few days. On those days all values are missing. Therefore we have choosen to replace the missing values at each interval with the mean for that 5-minute interval.**
+**The missing values are concentrated on few days. On those days all values are missing. Therefore we have choosen to replace the missing values at each interval with the mean for that 5-minute interval considering all days without NA values.**
   
 Data aggregation:
   
@@ -116,14 +119,14 @@ Histogram of the total number of steps taken each day:
   
 
 ```r
-qplot(acNovaConsol$s)
+qplot(acNovaConsol$s) + labs(x="Total number of steps taken each day", y="Frequency")
 ```
 
 ```
 ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png) 
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
   
 Mean and median calculation:
   
@@ -138,9 +141,7 @@ medianStep <- median(acNovaConsol$s)
 **Median total number of steps taken per day: 1.0766189 &times; 10<sup>4</sup>**
   
   
-### Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?  
-    
-**Yes, they differ. As the imputing data considered de interval of the day and not the date itself, when calculation the mean and the median values by day, it caused a difference in the results.**
+**These values differ very little from the estimates from the first part of the assignment. The impact of imputing missing data on the estimates of the total daily number of steps was to bring the mean and the median to the same value.**
     
   
   
@@ -170,7 +171,7 @@ Time series plot of the 5-minute interval (x-axis) and the average number of ste
 qplot(interval, m, data = acNovaConsolInterval, geom = "line", facets = typeOfDay ~ .) + labs(x="Intervals", y="Averaged Steps")
 ```
 
-![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
+![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png) 
   
 ### Second plot:
 
@@ -178,7 +179,7 @@ qplot(interval, m, data = acNovaConsolInterval, geom = "line", facets = typeOfDa
 qplot(interval, m, data = acNovaConsolInterval, geom = "line", col = typeOfDay) + labs(x="Intervals", y="Averaged Steps")
 ```
 
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png) 
+![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png) 
   
-**Yes, there are differences in activity patterns between weekdays and weekends, as seen on the plots.**
+**Yes, there are differences in activity patterns between weekdays and weekends, as seen on the plots. The weekends seem to have more steps, than the weekdays, during the afternoon and less steps during the morning.**
 
